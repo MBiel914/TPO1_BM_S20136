@@ -6,7 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="TPO1-JSON_SIMPLE"/>
 	<classpathentry kind="lib" path="/Users/mbielecki/eclipse-workspace/TPO1_BM_S20136/lib/javafx-sdk-17.0.2/lib/javafx.base.jar"/>
 	<classpathentry kind="lib" path="/Users/mbielecki/eclipse-workspace/TPO1_BM_S20136/lib/javafx-sdk-17.0.2/lib/javafx.controls.jar"/>
 	<classpathentry kind="lib" path="/Users/mbielecki/eclipse-workspace/TPO1_BM_S20136/lib/javafx-sdk-17.0.2/lib/javafx.swing.jar"/>
@@ -15,5 +14,6 @@
 	<classpathentry kind="lib" path="/Users/mbielecki/eclipse-workspace/TPO1_BM_S20136/lib/javafx-sdk-17.0.2/lib/javafx.fxml.jar"/>
 	<classpathentry kind="lib" path="/Users/mbielecki/eclipse-workspace/TPO1_BM_S20136/lib/javafx-sdk-17.0.2/lib/javafx.graphics.jar"/>
 	<classpathentry kind="lib" path="/Users/mbielecki/eclipse-workspace/TPO1_BM_S20136/lib/javafx-sdk-17.0.2/lib/javafx.media.jar"/>
+	<classpathentry kind="var" path="TPO1-JSON_SIMPLE"/>
 	<classpathentry kind="output" path="lib"/>
 </classpath>
