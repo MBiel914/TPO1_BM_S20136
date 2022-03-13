@@ -19,10 +19,19 @@ public class GUIApp extends Application {
 	Label labelInsertCityName;
 	Label labelInsertCurrencyAcronym;
 	Label labelWeather;
+	Label labelWeatherFullPath;
+	Label labelHumidity;
+	Label labelCurrency;
+	Label labelRateForCurrency;
+	Label labelNBPRate;
 
 	TextField textFieldCountryName;
 	TextField textFieldCityName;
 	TextField textFieldCurrencyAcronym;
+	TextField textFieldWeatherFullPathData;
+	TextField textFieldHumidityData;
+	TextField textFieldRateForCurrencyData;
+	TextField textFieldNBPRateData;
 
 	Button buttonSearchForData;
 
@@ -32,17 +41,44 @@ public class GUIApp extends Application {
 		labelInsertCityName = new Label("Please insert city name:");
 		labelInsertCurrencyAcronym = new Label("Please insert currency acronym:");
 		labelWeather = new Label("Weather:");
+		labelWeatherFullPath = new Label("Weather full path:");
+		labelHumidity = new Label("Humidity:");
+		labelCurrency = new Label("Currency:");
+		labelRateForCurrency = new Label("Rate for 1 USD:");
+		labelNBPRate = new Label("NBP rate for USD:");
 
 		textFieldCountryName = new TextField(_service.getCountryName());
 		textFieldCityName = new TextField("Warsaw");
 		textFieldCurrencyAcronym = new TextField("USD");
+		textFieldWeatherFullPathData = new TextField(_service.runGetWeather());
+		textFieldHumidityData = new TextField(_service.getWeatherField("humidity"));
+		textFieldRateForCurrencyData = new TextField(_service.runGetRateFor());
+		textFieldNBPRateData = new TextField(Double.toString(_service.getNBPRate()));
 
 		buttonSearchForData = new Button("Search for Data");
 		buttonSearchForData.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				_service.insertNewData(textFieldCountryName.getText(), textFieldCityName.getText(), textFieldCurrencyAcronym.getText());
-				_service.runService();
+				if (textFieldCurrencyAcronym.getText().isEmpty())
+					textFieldCurrencyAcronym.setText("PLN");
+				
+				if (textFieldCountryName.getText().isEmpty())
+					textFieldCountryName.setText("Poland");
+				
+				if (textFieldCityName.getText().isEmpty())
+					textFieldCityName.setText("Warsaw");
+				
+				_service.insertNewData(textFieldCountryName.getText(), textFieldCityName.getText(),
+						textFieldCurrencyAcronym.getText());
+
+				textFieldWeatherFullPathData.setText(_service.runGetWeather());
+				textFieldHumidityData.setText(_service.getWeatherField("humidity"));
+
+				labelRateForCurrency.setText("Rate for 1 " + textFieldCurrencyAcronym.getText().toUpperCase() + ":");
+				labelNBPRate.setText("NBP rate for " + _service.getCountryCurrency() + ":");
+
+				textFieldRateForCurrencyData.setText(_service.runGetRateFor());
+				textFieldNBPRateData.setText(Double.toString(_service.getNBPRate()));
 			}
 		});
 
@@ -66,10 +102,18 @@ public class GUIApp extends Application {
 		gridPane.add(textFieldCurrencyAcronym, 1, 2);
 
 		gridPane.add(buttonSearchForData, 1, 3);
-		
+
 		gridPane.add(labelWeather, 0, 4);
-//		gridPane.add(button1, 0, 2);
-//		gridPane.add(button2, 1, 2);
+		gridPane.add(labelWeatherFullPath, 0, 5);
+		gridPane.add(textFieldWeatherFullPathData, 1, 5);
+		gridPane.add(labelHumidity, 0, 6);
+		gridPane.add(textFieldHumidityData, 1, 6);
+
+		gridPane.add(labelCurrency, 0, 7);
+		gridPane.add(labelRateForCurrency, 0, 8);
+		gridPane.add(textFieldRateForCurrencyData, 1, 8);
+		gridPane.add(labelNBPRate, 0, 9);
+		gridPane.add(textFieldNBPRateData, 1, 9);
 
 		Scene scene = new Scene(gridPane);
 		stage.setTitle("CSS Example");
