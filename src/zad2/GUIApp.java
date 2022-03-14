@@ -14,12 +14,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class GUIApp extends Application {
 	private static Service _service;
-	private static String[] _args;
 	
 	Label labelInsertCountryName;
 	Label labelInsertCityName;
@@ -164,7 +162,6 @@ public class GUIApp extends Application {
 
 	public static void launch(Class<GUIApp> class1, String[] args, Service s) {
 		try {
-			_args = args;
 			_service = s;
 		} catch (Exception e) {
 			e.printStackTrace();
