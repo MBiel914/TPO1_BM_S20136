@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class GUIApp extends Application {
@@ -91,31 +92,23 @@ public class GUIApp extends Application {
 		buttonOpenMyOwnBrowser.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-//				StackPane secondaryLayout = new StackPane();
-//
-//				Scene secondScene = new Scene(secondaryLayout, 230, 100);
-//
-//				Stage newWindow = new Stage();
-//				newWindow.setTitle("Second Stage");
-//				newWindow.setScene(secondScene);
-//				
-//				WebEngine webEngine = new WebEngine();
-//			    webEngine.getLoadWorker().stateProperty()
-//			        .addListener((obs, oldValue, newValue) -> {
-//			          if (newValue == State.SUCCEEDED) {
-//			            System.out.println("finished loading");
-//			            org.w3c.dom.Document   xmlDom  = webEngine.getDocument();
-//			            System.out.println(xmlDom);
-//			          }
-//			        });
-//
-//			    webEngine.load("https://en.wikipedia.org/wiki/" + textFieldCityName.getText());
-//
-//			    Group root = new Group();
-//			    Scene scene = new Scene(root, 300, 250);
-//
-//			    newWindow.setScene(scene);
-//			    newWindow.show();
+				Stage newWindow = new Stage();
+				WebView webView = new WebView();
+				WebEngine webEngine = webView.getEngine();
+				Scene scene = new Scene(webView, 1200, 600);
+				
+				newWindow.setTitle("Wiki view");
+			    webEngine.getLoadWorker().stateProperty()
+			        .addListener((obs, oldValue, newValue) -> {
+			          if (newValue == State.SUCCEEDED) {
+			            org.w3c.dom.Document   xmlDom  = webEngine.getDocument();
+			            System.out.println(xmlDom);
+			          }
+			        });
+
+			    webEngine.load("https://en.wikipedia.org/wiki/" + textFieldCityName.getText());
+			    newWindow.setScene(scene);
+			    newWindow.show();
 			}
 		});
 

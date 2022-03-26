@@ -1,9 +1,6 @@
 package zad1;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -14,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
 public class Futil {
@@ -23,15 +21,14 @@ public class Futil {
 				@Override
 				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 					if (file.toString().trim().endsWith(".txt")) {
-						File readFile = file.toFile();
-						try (FileInputStream fileInputStream = new FileInputStream(readFile)) {
-							FileChannel fileChannel = fileInputStream.getChannel();
-							int fileSize = (int) fileChannel.size();
+						ByteBuffer byteBuffer = null;
+						
+						try (FileChannel fileInputStream = FileChannel.open(file)) {
+							int fileSize = (int) fileInputStream.size();
 
-							ByteBuffer byteBuffer = ByteBuffer.allocate(fileSize);
-							fileChannel.read(byteBuffer);
-							fileChannel.close();
-
+							byteBuffer = ByteBuffer.allocate(fileSize);
+							fileInputStream.read(byteBuffer);
+							
 							Append(DecodeToUTF8(byteBuffer), resultFileName);
 						} catch (FileNotFoundException e) {
 							e.printStackTrace();
@@ -63,13 +60,11 @@ public class Futil {
 	}
 
 	private static void Append(ByteBuffer byteBuffer, String resultFileName) {
-		FileOutputStream fileOutputStream;
 		try {
-			fileOutputStream = new FileOutputStream(resultFileName, true);
-			FileChannel fileChannel = fileOutputStream.getChannel();
+			FileChannel fileOutputStream = FileChannel.open(Path.of(resultFileName), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
-			fileChannel.write(byteBuffer);
-			fileChannel.close();
+			fileOutputStream.write(byteBuffer);
+			fileOutputStream.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

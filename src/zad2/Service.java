@@ -151,7 +151,7 @@ public class Service {
 		URL url;
 
 		try {
-			url = new URL("http://www.nbp.pl/kursy/kursya.html");
+			url = new URL("http://www.nbp.pl/kursy/kursyb.html");
 			Scanner sc = new Scanner(url.openStream());
 			StringBuffer sb = new StringBuffer();
 			while (sc.hasNext()) {
